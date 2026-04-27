@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>EcoMove Tunis — Covoiturage Intelligent</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g1:#0b4d2e;--g2:#1a7a4a;--g3:#2db36e;
+  --gl:#e6f5ed;--gp:#f0faf4;
+  --gold:#e8a020;--goldl:#fef7e6;
+  --red:#dc3545;--redl:#fff0f1;
+  --blue:#1a6bb5;--bluel:#e8f2fc;
+  --purple:#6941c6;--purplel:#f4f0fd;
+  --orange:#c4520a;--orangel:#fff4ed;
+  --bg:#f2f6f3;--card:#fff;--brd:#dde8e2;
+  --tx:#0f2419;--tx2:#3a5c47;--tx3:#7a9e8a;
+  --sh:0 2px 12px rgba(11,77,46,.07);
+  --shl:0 8px 28px rgba(11,77,46,.13);
+  --r:16px;--rsm:10px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;overflow:hidden}
+.screen{min-height:100vh;padding-bottom:84px;animation:su .22s ease both}
+@keyframes su{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:430px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--brd);display:flex;padding:6px 0 18px;z-index:200;box-shadow:0 -2px 16px rgba(0,0,0,.06)}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:none;cursor:pointer;padding:6px 0;transition:.15s}
+.nb .ni{font-size:20px;line-height:1}
+.nb .nl{font-size:9px;font-weight:700;color:var(--tx3);letter-spacing:.4px;text-transform:uppercase}
+.nb.on .nl{color:var(--g2)}
+.nb.on .ni{filter:drop-shadow(0 0 4px rgba(26,122,74,.5))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:var(--rsm);border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;transition:.18s;width:100%}
+.btn-p{background:var(--g2);color:#fff;box-shadow:0 4px 16px rgba(26,122,74,.25)}
+.btn-p:active{transform:scale(.98)}
+.btn-p:disabled{opacity:.45;cursor:not-allowed}
+.btn-s{background:var(--gl);color:var(--g1)}
+.btn-o{background:transparent;border:1.5px solid var(--brd);color:var(--tx2)}
+.btn-sm{padding:8px 14px;font-size:12.5px;width:auto;border-radius:8px}
+.card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh);border:1px solid var(--brd)}
+.card+.card{margin-top:12px}
+.cflat{background:var(--gp);border-radius:var(--r);padding:14px;border:1px solid #c8e6d4}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--tx2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.6px}
+.field input,.field select,.field textarea{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:var(--rsm);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--tx);background:#fff;outline:none;transition:.18s;appearance:none}
+.field input:focus,.field select:focus{border-color:var(--g2);box-shadow:0 0 0 3px rgba(26,122,74,.1)}
+.field textarea{resize:none;min-height:68px;line-height:1.5}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M5 7L0 0h10z' fill='%237a9e8a'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.pp{padding:0 16px}
+.hdr{padding:52px 16px 14px;display:flex;align-items:center;justify-content:space-between}
+.tag{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.tg{background:var(--gl);color:var(--g1)}
+.tgo{background:var(--goldl);color:#8a5a0a}
+.tb{background:var(--bluel);color:var(--blue)}
+.tr{background:var(--redl);color:var(--red)}
+.tp{background:var(--purplel);color:var(--purple)}
+.tor{background:var(--orangel);color:var(--orange)}
+.av{border-radius:50%;background:var(--gl);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--g1);flex-shrink:0;font-size:14px;width:42px;height:42px}
+.av-sm{width:30px;height:30px;font-size:10px}
+.stars{color:var(--gold);font-size:12px;letter-spacing:1px}
+.row{display:flex;align-items:center}
+.rowb{display:flex;align-items:center;justify-content:space-between}
+.gap6{gap:6px}
+.gap10{gap:10px}
+.mt8{margin-top:8px}
+.mt12{margin-top:12px}
+.mt18{margin-top:18px}
+.muted{font-size:12px;color:var(--tx3)}
+.muted2{font-size:12px;color:var(--tx2)}
+.div{height:1px;background:var(--brd);margin:12px 0}
+.toast{position:fixed;top:54px;left:50%;transform:translateX(-50%);background:#0b3d1f;color:#fff;padding:10px 20px;border-radius:var(--rsm);font-size:13px;font-weight:700;z-index:9999;animation:tin .28s ease;white-space:nowrap;box-shadow:var(--shl)}
+@keyframes tin{from{opacity:0;top:38px}to{opacity:1;top:54px}}
+.aw{min-height:100vh;display:flex;flex-direction:column;background:#0b3d1f}
+.atop{padding:50px 26px 24px;color:#fff}
+.alogo{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:6px}
+.asub{opacity:.75;font-size:13.5px;line-height:1.5}
+.abody{flex:1;background:#fff;border-radius:24px 24px 0 0;padding:26px 18px;overflow-y:auto}
+.atabs{display:flex;background:var(--bg);border-radius:10px;padding:3px;margin-bottom:20px}
+.atab{flex:1;padding:9px;text-align:center;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:none;background:none;color:var(--tx3);transition:.18s}
+.atab.on{background:#fff;color:var(--g2);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.htop{background:linear-gradient(150deg,#072b18 0%,#0e5530 50%,#1a7a4a 100%);padding:50px 16px 18px;color:#fff;position:relative}
+.htop::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:20px;background:var(--bg);border-radius:18px 18px 0 0}
+.eco-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:6px 13px;display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;margin-top:12px}
+.srch{background:#fff;border-radius:var(--r);padding:2px;margin-top:18px;box-shadow:var(--shl);border:1px solid var(--brd);position:relative}
+.srow{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--brd)}
+.srow:last-child{border-bottom:none}
+.sico{font-size:15px;width:22px;text-align:center;flex-shrink:0}
+.sinp{flex:1;border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--tx);background:transparent}
+.sinp::placeholder{color:var(--tx3)}
+.sdrop{position:absolute;left:0;right:0;background:#fff;border-radius:var(--rsm);border:1px solid var(--brd);z-index:99;box-shadow:var(--shl);overflow:hidden;max-height:180px;overflow-y:auto}
+.sditem{padding:10px 14px;cursor:pointer;font-size:13.5px;border-bottom:1px solid var(--brd);font-weight:500;color:var(--tx)}
+.sditem:hover{background:var(--gp)}
+.zones{display:flex;gap:7px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none}
+.zones::-webkit-scrollbar{display:none}
+.zchip{flex-shrink:0;padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid var(--brd);background:#fff;color:var(--tx2);cursor:pointer;transition:.15s;white-space:nowrap}
+.zchip.on{background:var(--g2);color:#fff;border-color:var(--g2)}
+.rcard{background:var(--card);border-radius:var(--r);border:1px solid var(--brd);padding:14px;margin-top:10px;cursor:pointer;transition:.18s;box-shadow:var(--sh)}
+.rcard:active{transform:scale(.99)}
+.rroute{font-size:16px;font-weight:800;display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.rarr{color:var(--tx3);font-size:12px}
+.rprice{font-size:21px;font-weight:800;color:var(--g2)}
+.rsub{font-size:10px;color:var(--tx3);font-weight:600}
+.rv{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.rvd{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.rvl{width:2px;flex:1;min-height:26px}
+.dtabs{display:flex;gap:5px;margin-top:11px}
+.dtab{padding:7px 15px;border-radius:20px;font-weight:700;font-size:12px;border:none;cursor:pointer;transition:.15s}
+.dtab.on{background:#fff;color:var(--g1)}
+.dtab.off{background:rgba(255,255,255,.17);color:rgba(255,255,255,.85)}
+.mapblk{background:linear-gradient(145deg,#e6f5ed,#d0edd9);border-radius:var(--r);height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:2px dashed #a8d8bc;position:relative;overflow:hidden}
+.mapblk::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(168,216,188,.3) 26px,rgba(168,216,188,.3) 27px),repeating-linear-gradient(90deg,transparent,transparent 26px,rgba(168,216,188,.3) 26px,rgba(168,216,188,.3) 27px)}
+.mpin{font-size:34px;animation:mb 2s ease-in-out infinite;z-index:1}
+@keyframes mb{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.clist{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+.cmsg{max-width:76%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.45}
+.cmsg.me{background:var(--g2);color:#fff;border-bottom-right-radius:3px;align-self:flex-end}
+.cmsg.them{background:#fff;border:1px solid var(--brd);border-bottom-left-radius:3px;color:var(--tx)}
+.cbar{padding:10px 12px;background:#fff;border-top:1px solid var(--brd);display:flex;gap:7px;align-items:center}
+.cinp{flex:1;padding:10px 13px;border-radius:20px;border:1.5px solid var(--brd);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;outline:none}
+.csend{width:40px;height:40px;border-radius:50%;background:var(--g2);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.ptop{background:linear-gradient(150deg,#072b18,#1a7a4a);padding:50px 16px 68px;text-align:center;color:#fff}
+.pstats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:#fff;border-radius:var(--r);padding:16px 10px;margin:-44px 12px 0;position:relative;z-index:1;box-shadow:var(--shl)}
+.ps{text-align:center}
+.psn{font-size:19px;font-weight:800}
+.psl{font-size:10px;color:var(--tx3);margin-top:2px}
+.ps+.ps{border-left:1px solid var(--brd)}
+.prog{height:5px;background:var(--gl);border-radius:3px;overflow:hidden;margin-top:4px}
+.pf{height:100%;background:linear-gradient(90deg,var(--g3),var(--g2));border-radius:3px;transition:.4s}
+.lbr{width:28px;height:28px;border-radius:50%;background:var(--gl);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:var(--g1);flex-shrink:0}
+.lr1{background:#fef3c7;color:#d97706}
+.lr2{background:#f1f5f9;color:#475569}
+.lr3{background:#fff7ed;color:#c2410c}
+.bdg{display:flex;flex-direction:column;align-items:center;gap:4px;padding:11px 6px;background:var(--gp);border-radius:12px;border:1px solid #c8e6d4}
+.bdgi{font-size:24px}
+.bdgn{font-size:10px;font-weight:700;color:var(--tx2);text-align:center;line-height:1.3}
+.altcard{border-radius:var(--r);padding:14px;border:2px solid;margin-bottom:10px}
+.altmetro{background:#f4f0fd;border-color:#c4b0f8}
+.altbus{background:var(--orangel);border-color:#f9b785}
+.alttaxi{background:#fff8e6;border-color:#f5d87a}
+.alttgm{background:#eef8ff;border-color:#90cdf4}
+.alttitle{font-weight:800;font-size:14px;display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.altrow{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.07);font-size:12.5px}
+.altrow:last-child{border-bottom:none}
+.astat{background:#fff;border-radius:var(--r);padding:16px;text-align:center;border:1px solid var(--brd);box-shadow:var(--sh)}
+.asn{font-size:26px;font-weight:800;color:var(--g2)}
+.asl{font-size:10.5px;color:var(--tx3);margin-top:3px}
+.brow{margin-bottom:11px}
+.btrack{height:6px;background:var(--gl);border-radius:3px;overflow:hidden;margin-top:4px}
+.bfill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--g3),var(--g2))}
+::-webkit-scrollbar{width:0}
+@media(max-width:430px){.app,.bnav{max-width:100%;width:100%}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script>
+const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
+
+const ZONES={
+  'Centre':['Centre Ville','Bab Bhar','Bab Souika','Halfaouine','Médina','La Kasbah','Montfleury','Bab El Jazira'],
+  'Nord':['La Marsa','Carthage','Sidi Bou Saïd','Gammarth','Ennasr','Cité Ghazela','Lac 1','Lac 2','Berges du Lac','Aïn Zaghouan'],
+  'Banlieue Nord':['Ariana','Ettadhamen','Mnihla','Raoued','Soukra','Borj Louzir','Cité Olympique'],
+  'Ouest':['Manouba','Den Den','Douar Hicher','Oued Ellil','Bardo','El Omrane','El Omrane Sup.','Cité El Khadra','Cité Ibn Khaldoun'],
+  'Sud':['Rades','Mégrine','Ben Arous','Hammam Lif','Hammam Chott','Boumhel','Fouchana','Ezzahra','Mohamedia'],
+  'Est':['La Goulette','Le Kram',"L'Aouina",'El Menzah 1','El Menzah 5','El Menzah 6','El Menzah 9','Manar 1','Manar 2','Manar 3'],
+};
+const ALL_ZONES=Object.values(ZONES).flat();
+
+const LM={
+  'Centre Ville':['Av. Habib Bourguiba','Place de la Victoire','Rue de Rome','Av. de France'],
+  'La Marsa':['Corniche La Marsa','CC La Marsa','Place Saf Saf','Av. Taïeb Mehiri'],
+  'Ariana':['Av. de la République','CC Ariana','Cité Ennasr II'],
+  'Lac 2':['Twin Center','Berges du Lac','Imm. Lac 2'],
+  'El Menzah 9':['Av. Maghreb Arabe','Marché El Menzah 9'],
+  'Bardo':['Av. 20 Mars','Musée du Bardo','Rue Mongi Slim'],
+  'Rades':['Port de Rades','Av. Farhat Hached'],
+  'La Goulette':['Av. Franklin Roosevelt','Port La Goulette'],
+  'Carthage':['Amphithéâtre','Musée de Carthage','Aéroport Tunis-Carthage'],
+  'Ettadhamen':['Av. 18 Janvier','Marché Ettadhamen'],
+  'Bab Bhar':['Gare de Tunis','Av. de la Liberté'],
+  'El Menzah 5':['Av. El Menzah 5','Marché El Menzah'],
+  'El Menzah 6':['Av. El Menzah 6'],
+  'Manar 1':['Av. Manar 1','Cité Manar 1'],
+  'Manar 2':['Av. Manar 2'],
+  'Soukra':['Av. de la Soukra','Cité Soukra'],
+  'Ennasr':['Av. Ennasr','Cité Ennasr I'],
+  'Hammam Lif':['Centre Hammam Lif','Plage Hammam Lif'],
+  'Ben Arous':['Av. de la Pépinière','Centre Ben Arous'],
+  'Manouba':['Av. du 18 Janvier','Centre Manouba'],
+};
+
+const DIST={
+  'Centre Ville':{'La Marsa':18,'Ariana':8,'Lac 2':9,'El Menzah 9':10,'Bardo':6,'Rades':15,'La Goulette':12,'Carthage':16,'Gammarth':22,'Sidi Bou Saïd':19,'Hammam Lif':22,'Ben Arous':12,'Ettadhamen':11,'Manouba':14,'Soukra':12,'Ennasr':9,'Le Kram':10,'Manar 1':11,'Manar 2':12,'El Menzah 1':9,'El Menzah 5':10,'El Menzah 6':10,'El Menzah 9':11,"L'Aouina":8,'Bab Bhar':1,'Halfaouine':2,'Montfleury':3},
+  'Ariana':{'La Marsa':14,'Lac 2':6,'El Menzah 9':6,'Bardo':12,'Ettadhamen':4,'Soukra':5,'Ennasr':3,'Carthage':11,'Manar 1':7,'Raoued':8,'Borj Louzir':9},
+  'La Marsa':{'Carthage':4,'Sidi Bou Saïd':4,'Gammarth':6,'La Goulette':8,'Lac 2':12,'Ennasr':10,'Ariana':14},
+  'Ettadhamen':{'Bardo':8,'Manouba':5,'El Menzah 9':10,'Den Den':4,'Oued Ellil':9,'Ariana':4},
+  'Rades':{'Ben Arous':5,'Hammam Lif':10,'Mégrine':6,'Boumhel':8},
+  'Bardo':{'Manouba':8,'El Omrane':4,'Centre Ville':6,'Den Den':5},
+  'El Menzah 9':{'Lac 2':6,'Manar 1':3,'Manar 2':4,'Ariana':6},
+  'Hammam Lif':{'Rades':10,'Ben Arous':14,'Hammam Chott':5,'Boumhel':7},
+  'La Goulette':{'Le Kram':3,'Centre Ville':12,'La Marsa':8},
+  'Lac 2':{'El Menzah 9':6,'Ariana':6,'Centre Ville':9,'La Marsa':12},
+};
+
+const getKm=(a,b)=>{
+  if(!a||!b||a===b) return 0;
+  if(DIST[a]?.[b]) return DIST[a][b];
+  if(DIST[b]?.[a]) return DIST[b][a];
+  const secOf=z=>Object.entries(ZONES).find(([,v])=>v.includes(z))?.[0]||'';
+  const sa=secOf(a),sb=secOf(b);
+  if(sa===sb) return 6;
+  const order=['Centre','Est','Nord','Banlieue Nord','Ouest','Sud'];
+  const d=Math.abs(order.indexOf(sa)-order.indexOf(sb));
+  return d<=1?9:d===2?13:d>=3?18:12;
+};
+
+// Prix = carburant fixe 0.9 DT + 0.13 DT/km, arrondi à 0.5 DT
+const calcPrice=(km)=>Math.max(1.0,Math.round((0.9+km*0.13)*2)/2);
+const carburantPart=(km,seats)=>((0.9+km*0.13)/Math.max(1,seats)).toFixed(3);
+
+// Alternatives transport réelles Grand Tunis
+const getAlts=(from,to)=>{
+  const km=getKm(from,to);
+  const secOf=z=>Object.entries(ZONES).find(([,v])=>v.includes(z))?.[0]||'';
+  const sa=secOf(from),sb=secOf(to);
+  const alts=[];
+
+  // METRO LEGER
+  const metroZ=['Centre Ville','Bab Bhar','Halfaouine','Bab Souika','Bardo','El Omrane','El Omrane Sup.','Ariana','Ettadhamen','El Menzah 1','El Menzah 5','El Menzah 6','El Menzah 9','Manar 1','Manar 2','Ben Arous'];
+  const hasMF=metroZ.some(z=>from.includes(z.split(' ')[0])||z.includes(from.split(' ')[0]));
+  const hasMT=metroZ.some(z=>to.includes(z.split(' ')[0])||z.includes(to.split(' ')[0]));
+  if(hasMF||hasMT||sa==='Centre'||sb==='Centre'){
+    const lignes=[];
+    if(from.includes('Ettadhamen')||to.includes('Ettadhamen')||from.includes('Den Den')||to.includes('Den Den'))
+      lignes.push({l:'L3',desc:'Ettadhamen ↔ Place Barcelone',freq:'12 min',tarif:'0.640 DT',dep:'Station Ettadhamen'});
+    if(from.includes('Ariana')||to.includes('Ariana')||from.includes('Ennasr')||to.includes('Ennasr'))
+      lignes.push({l:'L4',desc:'Ariana ↔ Bab El Khadhra',freq:'10 min',tarif:'0.640 DT',dep:'Station Ariana'});
+    if(from.includes('Menzah')||to.includes('Menzah')||from.includes('Manar')||to.includes('Manar'))
+      lignes.push({l:'L2',desc:'El Mourouj ↔ Ben Arous (via Menzah)',freq:'10 min',tarif:'0.640 DT',dep:'Station La Menzah'});
+    if(from.includes('Bardo')||to.includes('Bardo')||from.includes('Omrane')||to.includes('Omrane'))
+      lignes.push({l:'L1',desc:'Ben Arous ↔ La Marsa Corniche',freq:'8 min',tarif:'0.640 DT',dep:'Station Bardo'});
+    if(lignes.length===0)
+      lignes.push({l:'L1',desc:'Traversée Centre-Ville',freq:'8 min',tarif:'0.640 DT',dep:'Gare Barcelone'});
+    alts.push({type:'metro',lignes:lignes.slice(0,2)});
+  }
+
+  // TGM
+  const tgmZ=['La Marsa','Carthage','Sidi Bou Saïd','Gammarth','La Goulette','Le Kram','Berges du Lac'];
+  if(tgmZ.some(z=>from.includes(z.split(' ')[0]))||tgmZ.some(z=>to.includes(z.split(' ')[0]))){
+    const duree=km<=6?'14 min':km<=14?'28 min':'40 min';
+    alts.push({type:'tgm',duree,freq:'15 min',tarif:'0.850 DT'});
+  }
+
+  // BUS TRANSTU
+  const busL=[];
+  if(sa==='Sud'||sb==='Sud') busL.push({n:'52B',desc:'Rades/Ben Arous ↔ Bab Alioua',freq:'20 min',tarif:'0.520 DT'});
+  if(sa==='Ouest'||sb==='Ouest') busL.push({n:'27',desc:'Bardo/Manouba ↔ Av. Habib Bourguiba',freq:'15 min',tarif:'0.520 DT'});
+  if(sa==='Banlieue Nord'||sb==='Banlieue Nord') busL.push({n:'3',desc:'Ettadhamen/Ariana ↔ Place Barcelone',freq:'10 min',tarif:'0.520 DT'});
+  if(sa==='Nord'||sb==='Nord') busL.push({n:'35',desc:'La Marsa ↔ Av. H. Bourguiba',freq:'20 min',tarif:'0.640 DT'});
+  if(busL.length===0) busL.push({n:'—',desc:from+' ↔ Centre Ville',freq:'20 min',tarif:'0.520 DT'});
+  alts.push({type:'bus',lignes:busL.slice(0,2)});
+
+  // TAXI
+  const prixTaxi=Math.round((2.5+km*0.57)*2)/2;
+  const dureeT=Math.round(km/22*60);
+  alts.push({type:'taxi',prix:prixTaxi,duree:dureeT+' min',apps:'Bolt · InDrive · Yassir',tel:'71 340 000'});
+
+  return alts;
+};
+
+
+const USERS=[
+  {_id:'u1',name:'Rami Gharbi',email:'rami@demo.tn',role:'driver',avg:4.9,pts:420,rides:23,co2:52.4,bal:96.00,badges:[{n:'Eco Warrior',i:'🌿'},{n:'Road Master',i:'🏆'}],zone:'Ariana',isAdmin:false},
+  {_id:'u2',name:'Sana Trabelsi',email:'sana@demo.tn',role:'passenger',avg:4.7,pts:185,rides:11,co2:22.1,bal:38.50,badges:[{n:'Premier Trajet',i:'🌱'}],zone:'Centre Ville',isAdmin:false},
+  {_id:'u3',name:'Yassine Mrabti',email:'yassine@demo.tn',role:'both',avg:4.8,pts:350,rides:19,co2:44.7,bal:82.00,badges:[{n:'Eco Warrior',i:'🌿'},{n:'CO2 Sauveur',i:'🌍'}],zone:'El Menzah 9',isAdmin:false},
+  {_id:'u4',name:'Ines Hamdi',email:'ines@demo.tn',role:'both',avg:5.0,pts:280,rides:16,co2:35.2,bal:64.00,badges:[{n:'Premier Trajet',i:'🌱'},{n:'Eco Warrior',i:'🌿'}],zone:'La Marsa',isAdmin:false},
+  {_id:'u5',name:'Tarek Mansouri',email:'tarek@demo.tn',role:'driver',avg:4.6,pts:510,rides:29,co2:68.3,bal:115.0,badges:[{n:'Eco Warrior',i:'🌿'},{n:'CO2 Sauveur',i:'🌍'},{n:'Road Master',i:'🏆'}],zone:'Ettadhamen',isAdmin:false},
+  {_id:'u6',name:'Mariem Ben Ali',email:'mariem@demo.tn',role:'both',avg:4.8,pts:230,rides:14,co2:29.8,bal:52.00,badges:[{n:'Premier Trajet',i:'🌱'}],zone:'Bardo',isAdmin:false},
+  {_id:'u7',name:'Khalil Sfaxi',email:'khalil@demo.tn',role:'driver',avg:4.9,pts:390,rides:22,co2:48.1,bal:88.00,badges:[{n:'Eco Warrior',i:'🌿'},{n:'Road Master',i:'🏆'}],zone:'Rades',isAdmin:false},
+];
+
+const N=Date.now();
+const h=n=>new Date(N+n*3600000).toISOString();
+const RIDES0=[
+  {_id:'r1',driver:USERS[0],from:{zone:'Ariana',addr:'Cité Ennasr II, Av. de la République'},to:{zone:'Centre Ville',addr:'Av. Habib Bourguiba'},dep:h(1.5),seats:3,avail:2,price:2.0,km:8,co2:1.0,note:'Je passe par Lac 1 si besoin 👍'},
+  {_id:'r2',driver:USERS[4],from:{zone:'Ettadhamen',addr:'Av. 18 Janvier'},to:{zone:'Ariana',addr:'Ariana Ville, Av. de la République'},dep:h(0.5),seats:4,avail:3,price:1.5,km:4,co2:0.5,note:''},
+  {_id:'r3',driver:USERS[3],from:{zone:'La Marsa',addr:'Corniche La Marsa'},to:{zone:'Centre Ville',addr:'Place de la Victoire'},dep:h(2),seats:3,avail:1,price:3.0,km:18,co2:2.3,note:'Musique douce 🎵 Non-fumeur'},
+  {_id:'r4',driver:USERS[2],from:{zone:'El Menzah 9',addr:'Marché El Menzah 9'},to:{zone:'Lac 2',addr:'Twin Center, Berges du Lac'},dep:h(3),seats:2,avail:2,price:1.7,km:6,co2:0.8,note:''},
+  {_id:'r5',driver:USERS[6],from:{zone:'Rades',addr:'Av. Farhat Hached'},to:{zone:'Centre Ville',addr:'Bab El Jazira'},dep:h(1),seats:4,avail:3,price:2.9,km:15,co2:1.9,note:'Départ ponctuel ⏰'},
+  {_id:'r6',driver:USERS[5],from:{zone:'Bardo',addr:'Av. 20 Mars'},to:{zone:'Centre Ville',addr:'Rue de Rome'},dep:h(0.75),seats:3,avail:2,price:1.7,km:6,co2:0.8,note:''},
+  {_id:'r7',driver:USERS[0],from:{zone:'Centre Ville',addr:'Av. de France'},to:{zone:'La Marsa',addr:'Place Saf Saf'},dep:h(4.5),seats:3,avail:3,price:3.0,km:18,co2:2.3,note:'Retour soirée 🌙'},
+  {_id:'r8',driver:USERS[4],from:{zone:'Ettadhamen',addr:'Marché Ettadhamen'},to:{zone:'Bardo',addr:'Musée du Bardo'},dep:h(2.5),seats:4,avail:4,price:1.6,km:5,co2:0.6,note:''},
+  {_id:'r9',driver:USERS[3],from:{zone:'La Marsa',addr:'CC La Marsa'},to:{zone:'Lac 2',addr:'Berges du Lac'},dep:h(1.25),seats:2,avail:1,price:2.5,km:12,co2:1.5,note:'AC disponible ❄️'},
+  {_id:'r10',driver:USERS[6],from:{zone:'Hammam Lif',addr:'Centre Hammam Lif'},to:{zone:'Rades',addr:'Port de Rades'},dep:h(0.5),seats:3,avail:2,price:2.2,km:10,co2:1.3,note:''},
+];
+const MSGS0={
+  r1:[{_id:'m1',sender:USERS[0],text:'Salam! Je serai devant la pharmacie ✅',at:new Date(N-3600000).toISOString()},{_id:'m2',sender:USERS[1],text:'Parfait, 5 min avant 🙏',at:new Date(N-1800000).toISOString()}],
+  r3:[{_id:'m3',sender:USERS[3],text:'Bonjour, trajet ~35 min environ 🚗',at:new Date(N-900000).toISOString()}],
+};
+
+const Ctx=createContext(null);
+function Provider({children}){
+  const [user,setUser]=useState(null);
+  const [toast,setToast]=useState('');
+  const [rides,setRides]=useState(RIDES0);
+  const [bookings,setBookings]=useState([]);
+  const [myRides,setMyRides]=useState([]);
+  const [msgs,setMsgs]=useState(MSGS0);
+
+  const showToast=useCallback(msg=>{setToast(msg);setTimeout(()=>setToast(''),3000);},[]);
+  const login=u=>setUser(u);
+  const logout=()=>{setUser(null);setBookings([]);setMyRides([]);};
+
+  const bookRide=rideId=>{
+    const ride=rides.find(r=>r._id===rideId);
+    if(!ride||ride.avail<1){showToast('Plus de places disponibles');return false;}
+    if(ride.driver._id===user._id){showToast('Vous ne pouvez pas réserver votre propre trajet');return false;}
+    if(user.bal<ride.price){showToast('Solde insuffisant dans votre portefeuille');return false;}
+    setRides(p=>p.map(r=>r._id===rideId?{...r,avail:r.avail-1}:r));
+    const bk={_id:'b'+Date.now(),ride:{...ride},cost:ride.price,at:new Date().toISOString()};
+    setBookings(p=>[bk,...p]);
+    setUser(u=>({...u,bal:+(u.bal-ride.price).toFixed(3),pts:u.pts+15,co2:+(u.co2+ride.co2).toFixed(1),rides:u.rides+1}));
+    showToast('Reservation confirmee! +15 pts');
+    return true;
+  };
+
+  const createRide=data=>{
+    const km=getKm(data.fromZone,data.toZone);
+    const price=calcPrice(km);
+    const co2=+(0.21*km*0.6).toFixed(1);
+    const nr={_id:'r'+Date.now(),driver:{...user},from:{zone:data.fromZone,addr:data.fromAddr||data.fromZone},to:{zone:data.toZone,addr:data.toAddr||data.toZone},dep:data.dep,seats:data.seats,avail:data.seats,price,km,co2,note:data.note||''};
+    setRides(p=>[nr,...p]);
+    setMyRides(p=>[nr,...p]);
+    setUser(u=>({...u,pts:u.pts+10}));
+    showToast('Trajet publie! +10 pts');
+    return nr;
+  };
+
+  const sendMsg=(rideId,text)=>{
+    const nm={_id:'m'+Date.now(),sender:{...user},text,at:new Date().toISOString()};
+    setMsgs(p=>({...p,[rideId]:[...(p[rideId]||[]),nm]}));
+  };
+
+  return React.createElement(Ctx.Provider,{value:{user,login,logout,toast,showToast,rides,bookings,myRides,msgs,bookRide,createRide,sendMsg}},children);
+}
+const useApp=()=>useContext(Ctx);
+
+const ini=n=>n?.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()||'?';
+const fmtT=iso=>new Date(iso).toLocaleTimeString('fr-TN',{hour:'2-digit',minute:'2-digit'});
+const fmtD=iso=>new Date(iso).toLocaleDateString('fr-TN',{weekday:'short',day:'numeric',month:'short'});
+const ago=iso=>{const d=Date.now()-new Date(iso);return d<60000?"a l'instant":d<3600000?Math.floor(d/60000)+'min':Math.floor(d/3600000)+'h'};
+const Av=({u,cls=''})=>React.createElement('div',{className:`av ${cls}`},ini(u?.name||'?'));
+const Stars=({r})=>React.createElement('span',{className:'stars'},'★'.repeat(Math.floor(r||5))+'☆'.repeat(5-Math.floor(r||5)));
+const Tag=({cls,ch})=>React.createElement('span',{className:`tag ${cls}`},ch);
+
+
+function AuthScreen(){
+  const {login}=useApp();
+  const [tab,setTab]=useState('login');
+  const [f,setF]=useState({name:'',email:'rami@demo.tn',pass:'demo123',role:'passenger',tel:'',zone:'Ariana'});
+  const [err,setErr]=useState('');
+  const [loading,setLoading]=useState(false);
+  const set=(k,v)=>setF(p=>({...p,[k]:v}));
+  const submit=async()=>{
+    setLoading(true);setErr('');
+    await new Promise(r=>setTimeout(r,650));
+    if(tab==='login'){
+      const u=USERS.find(u=>u.email===f.email);
+      if(!u){setErr('Email introuvable');setLoading(false);return;}
+      if(f.pass!=='demo123'){setErr('Mot de passe incorrect');setLoading(false);return;}
+      login(u);
+    } else {
+      if(!f.name||!f.email){setErr('Veuillez remplir tous les champs');setLoading(false);return;}
+      login({_id:'u_new',...f,avg:5.0,pts:0,rides:0,co2:0,bal:50,badges:[],isAdmin:false});
+    }
+    setLoading(false);
+  };
+  return React.createElement('div',{className:'aw'},
+    React.createElement('div',{className:'atop'},
+      React.createElement('div',{className:'alogo'},'EcoMove'),
+      React.createElement('div',{className:'asub'},'Covoiturage intelligent dans le Grand Tunis\nVoyagez ensemble, preservez notre ville')
+    ),
+    React.createElement('div',{className:'abody'},
+      React.createElement('div',{className:'atabs'},
+        ['login','register'].map(t=>React.createElement('button',{key:t,className:'atab'+(tab===t?' on':''),onClick:()=>setTab(t)},t==='login'?'Connexion':'Inscription'))
+      ),
+      tab==='register'&&React.createElement('div',{className:'field'},React.createElement('label',null,'Nom complet'),React.createElement('input',{type:'text',placeholder:'Ex: Yassine Ben Ahmed',value:f.name,onChange:e=>set('name',e.target.value)})),
+      React.createElement('div',{className:'field'},React.createElement('label',null,'Email'),React.createElement('input',{type:'email',placeholder:'votre@email.tn',value:f.email,onChange:e=>set('email',e.target.value)})),
+      React.createElement('div',{className:'field'},React.createElement('label',null,'Mot de passe'),React.createElement('input',{type:'password',placeholder:'••••••••',value:f.pass,onChange:e=>set('pass',e.target.value)})),
+      tab==='register'&&React.createElement('div',null,
+        React.createElement('div',{className:'field'},React.createElement('label',null,'Telephone'),React.createElement('input',{type:'tel',placeholder:'+216 XX XXX XXX',value:f.tel,onChange:e=>set('tel',e.target.value)})),
+        React.createElement('div',{className:'field'},
+          React.createElement('label',null,'Votre quartier (Grand Tunis)'),
+          React.createElement('select',{value:f.zone,onChange:e=>set('zone',e.target.value)},
+            Object.entries(ZONES).map(([sec,zs])=>React.createElement('optgroup',{key:sec,label:'📌 '+sec},zs.map(z=>React.createElement('option',{key:z,value:z},z))))
+          )
+        ),
+        React.createElement('div',{className:'field'},
+          React.createElement('label',null,'Role'),
+          React.createElement('select',{value:f.role,onChange:e=>set('role',e.target.value)},
+            React.createElement('option',{value:'passenger'},'Passager'),
+            React.createElement('option',{value:'driver'},'Conducteur'),
+            React.createElement('option',{value:'both'},'Les deux')
+          )
+        )
+      ),
+      err&&React.createElement('div',{style:{background:'#fff0f1',color:'#dc3545',padding:'10px 13px',borderRadius:'8px',fontSize:'13px',marginBottom:'12px',fontWeight:'700',border:'1px solid #ffc9cc'}},'⚠️ '+err),
+      React.createElement('button',{className:'btn btn-p',onClick:submit,disabled:loading},loading?'...':tab==='login'?'Se connecter':'Creer mon compte'),
+      tab==='login'&&React.createElement('p',{style:{textAlign:'center',marginTop:'13px',fontSize:'12px',color:'var(--tx3)'}},
+        'Demo: ',React.createElement('strong',{style:{color:'var(--g2)'}},'rami@demo.tn'),' / demo123'
+      )
+    )
+  );
+}
+
+function AltCard({alt}){
+  if(alt.type==='metro') return React.createElement('div',{className:'altcard altmetro'},
+    React.createElement('div',{className:'alttitle',style:{color:'var(--purple)'}},'🚇 Metro Leger Transtu'),
+    alt.lignes.map((l,i)=>React.createElement('div',{key:i,className:'altrow',style:{color:'var(--purple)'}},
+      React.createElement('div',null,
+        React.createElement('div',{style:{fontWeight:'700',fontSize:'12.5px'}},'Ligne '+l.l+' — '+l.desc),
+        React.createElement('div',{style:{fontSize:'11px',opacity:.8}},l.dep+' · toutes les '+l.freq)
+      ),
+      React.createElement('span',{style:{fontWeight:'800',fontSize:'13px'}},l.tarif)
+    ))
+  );
+  if(alt.type==='tgm') return React.createElement('div',{className:'altcard alttgm'},
+    React.createElement('div',{className:'alttitle',style:{color:'var(--blue)'}},'🚃 TGM — Tunis Marine ↔ La Marsa'),
+    React.createElement('div',{className:'altrow',style:{color:'var(--blue)'}},React.createElement('span',null,'Duree ~'+alt.duree),React.createElement('span',{style:{fontWeight:'800'}},alt.tarif)),
+    React.createElement('div',{className:'altrow',style:{color:'var(--blue)'}},React.createElement('span',null,'Frequence: '+alt.freq),React.createElement('span',null,'📍 Gare Tunis Marine'))
+  );
+  if(alt.type==='bus') return React.createElement('div',{className:'altcard altbus'},
+    React.createElement('div',{className:'alttitle',style:{color:'var(--orange)'}},'🚌 Bus Transtu'),
+    alt.lignes.map((l,i)=>React.createElement('div',{key:i,className:'altrow',style:{color:'var(--orange)'}},
+      React.createElement('div',null,
+        React.createElement('div',{style:{fontWeight:'700',fontSize:'12.5px'}},'Bus '+l.n+' — '+l.desc),
+        React.createElement('div',{style:{fontSize:'11px',opacity:.8}},'toutes les '+l.freq)
+      ),
+      React.createElement('span',{style:{fontWeight:'800',fontSize:'13px'}},l.tarif)
+    ))
+  );
+  if(alt.type==='taxi') return React.createElement('div',{className:'altcard alttaxi'},
+    React.createElement('div',{className:'alttitle',style:{color:'#7a5a00'}},'🚕 Taxi'),
+    React.createElement('div',{className:'altrow',style:{color:'#7a5a00'}},React.createElement('span',null,'Prix estime'),React.createElement('span',{style:{fontWeight:'800',fontSize:'15px'}},alt.prix.toFixed(1)+' DT')),
+    React.createElement('div',{className:'altrow',style:{color:'#7a5a00'}},React.createElement('span',null,'Duree estimee'),React.createElement('span',{style:{fontWeight:'700'}},alt.duree)),
+    React.createElement('div',{className:'altrow',style:{color:'#7a5a00'}},React.createElement('span',null,'Apps mobiles'),React.createElement('span',{style:{fontWeight:'700',fontSize:'11.5px'}},alt.apps)),
+    React.createElement('div',{className:'altrow',style:{color:'#7a5a00'}},
+      React.createElement('span',null,'Centrale taxi'),
+      React.createElement('a',{href:'tel:'+alt.tel,style:{fontWeight:'800',color:'#b45309',fontSize:'14px',textDecoration:'none'}},alt.tel)
+    )
+  );
+  return null;
+}
+
+function RideCard({r,onClick}){
+  const {user}=useApp();
+  const isOwn=r.driver._id===user?._id;
+  return React.createElement('div',{className:'rcard',onClick,style:isOwn?{borderColor:'var(--g2)',borderWidth:'1.5px'}:{}},
+    React.createElement('div',{className:'rroute'},
+      r.from.zone,React.createElement('span',{className:'rarr'},'→'),r.to.zone,
+      isOwn&&React.createElement('span',{className:'tag tg',style:{marginLeft:'auto',fontSize:'10px'}},'Mon trajet')
+    ),
+    React.createElement('div',{className:'rowb',style:{marginBottom:'9px'}},
+      React.createElement('div',{className:'row gap6'},
+        React.createElement(Av,{u:r.driver}),
+        React.createElement('div',null,
+          React.createElement('div',{style:{fontSize:'13px',fontWeight:'700'}},r.driver.name),
+          React.createElement('div',{className:'row gap6'},React.createElement(Stars,{r:r.driver.avg}),React.createElement('span',{className:'muted'},r.driver.avg))
+        )
+      ),
+      React.createElement('div',{style:{textAlign:'right'}},
+        React.createElement('div',{className:'rprice'},r.price.toFixed(1)+' DT'),
+        React.createElement('div',{className:'rsub'},'/ pers')
+      )
+    ),
+    React.createElement('div',{style:{display:'flex',gap:'5px',flexWrap:'wrap'}},
+      React.createElement(Tag,{cls:'tg',ch:'🕐 '+fmtT(r.dep)}),
+      React.createElement(Tag,{cls:'tg',ch:'💺 '+r.avail+(r.avail!==1?' places':' place')}),
+      React.createElement(Tag,{cls:'tg',ch:'📍 '+r.km+' km'}),
+      React.createElement(Tag,{cls:'tb',ch:'🌿 -'+r.co2+'kg CO2'})
+    )
+  );
+}
+
+
+function HomeScreen({onRide}){
+  const {user,rides}=useApp();
+  const [from,setFrom]=useState('');
+  const [to,setTo]=useState('');
+  const [zone,setZone]=useState('');
+  const [searched,setSearched]=useState(false);
+  const [results,setResults]=useState([]);
+  const [alts,setAlts]=useState(null);
+  const [fd,setFd]=useState(false);
+  const [td,setTd]=useState(false);
+  const fSugg=from?ALL_ZONES.filter(z=>z.toLowerCase().includes(from.toLowerCase())).slice(0,5):[];
+  const tSugg=to?ALL_ZONES.filter(z=>z.toLowerCase().includes(to.toLowerCase())).slice(0,5):[];
+  const doSearch=()=>{
+    setFd(false);setTd(false);
+    let res=rides.filter(r=>r.avail>0);
+    if(from) res=res.filter(r=>r.from.zone.toLowerCase().includes(from.toLowerCase())||r.from.addr.toLowerCase().includes(from.toLowerCase()));
+    if(to) res=res.filter(r=>r.to.zone.toLowerCase().includes(to.toLowerCase())||r.to.addr.toLowerCase().includes(to.toLowerCase()));
+    if(zone){const zl=ZONES[zone]||[];res=res.filter(r=>zl.includes(r.from.zone)||zl.includes(r.to.zone));}
+    setResults(res);setSearched(true);
+    setAlts(res.length===0&&from&&to?getAlts(from,to):null);
+  };
+  const reset=()=>{setFrom('');setTo('');setZone('');setSearched(false);setResults([]);setAlts(null);};
+  const display=searched?results:rides.filter(r=>r.avail>0).slice(0,8);
+  return React.createElement('div',{className:'screen',onClick:()=>{setFd(false);setTd(false);}},
+    React.createElement('div',{className:'htop'},
+      React.createElement('div',{style:{fontSize:'20px',fontWeight:'800',marginBottom:'2px'}},'Salam '+user.name.split(' ')[0]+' 👋'),
+      React.createElement('div',{style:{opacity:.8,fontSize:'13px'}},'Ou allez-vous dans le Grand Tunis?'),
+      React.createElement('div',{className:'eco-chip'},'🌿 '+(user.co2||0).toFixed(1)+' kg CO2 economies'),
+      React.createElement('div',{className:'srch',onClick:e=>e.stopPropagation()},
+        React.createElement('div',{className:'srow',style:{position:'relative'}},
+          React.createElement('span',{className:'sico'},'🟢'),
+          React.createElement('input',{className:'sinp',placeholder:'Quartier de depart...',value:from,onChange:e=>{setFrom(e.target.value);setFd(true);},onFocus:()=>setFd(true),onKeyDown:e=>e.key==='Enter'&&doSearch()}),
+          from&&React.createElement('span',{style:{cursor:'pointer',color:'var(--tx3)',fontSize:'16px'},onClick:()=>setFrom('')},'×')
+        ),
+        fSugg.length>0&&fd&&React.createElement('div',{className:'sdrop',style:{top:'50px'}},fSugg.map(z=>React.createElement('div',{key:z,className:'sditem',onMouseDown:()=>{setFrom(z);setFd(false);}},z))),
+        React.createElement('div',{className:'srow',style:{borderBottom:'none',position:'relative'}},
+          React.createElement('span',{className:'sico'},'🔴'),
+          React.createElement('input',{className:'sinp',placeholder:'Destination...',value:to,onChange:e=>{setTo(e.target.value);setTd(true);},onFocus:()=>setTd(true),onKeyDown:e=>e.key==='Enter'&&doSearch()}),
+          to&&React.createElement('span',{style:{cursor:'pointer',color:'var(--tx3)',fontSize:'16px'},onClick:()=>setTo('')},'×')
+        ),
+        tSugg.length>0&&td&&React.createElement('div',{className:'sdrop',style:{bottom:'50px'}},tSugg.map(z=>React.createElement('div',{key:z,className:'sditem',onMouseDown:()=>{setTo(z);setTd(false);}},z)))
+      ),
+      React.createElement('button',{className:'btn btn-p',style:{marginTop:'10px'},onClick:doSearch},'🔍 Rechercher')
+    ),
+    React.createElement('div',{className:'zones'},
+      React.createElement('div',{className:'zchip'+(zone===''?' on':''),onClick:()=>{setZone('');setSearched(false);setAlts(null);}},'🗺️ Tout'),
+      Object.keys(ZONES).map(z=>React.createElement('div',{key:z,className:'zchip'+(zone===z?' on':''),onClick:()=>{
+        setZone(z);const zl=ZONES[z]||[];
+        const res=rides.filter(r=>r.avail>0&&(zl.includes(r.from.zone)||zl.includes(r.to.zone)));
+        setResults(res);setSearched(true);setAlts(null);
+      }},z))
+    ),
+    React.createElement('div',{className:'pp',style:{marginTop:'10px'}},
+      React.createElement('div',{className:'rowb',style:{marginBottom:'6px'}},
+        React.createElement('div',{style:{fontSize:'11px',fontWeight:'700',color:'var(--tx3)',textTransform:'uppercase',letterSpacing:'.5px'}},
+          searched?display.length+' trajet'+(display.length!==1?'s':'')+' trouve'+(display.length!==1?'s':''):'Disponibles maintenant'
+        ),
+        searched&&React.createElement('button',{className:'btn btn-sm btn-o',style:{width:'auto'},onClick:reset},'Effacer')
+      ),
+      alts&&React.createElement('div',null,
+        React.createElement('div',{style:{background:'#fffbeb',border:'1.5px solid #f5d87a',borderRadius:'var(--r)',padding:'12px 14px',marginBottom:'12px'}},
+          React.createElement('div',{style:{fontWeight:'800',fontSize:'14px',color:'#7a5a00',marginBottom:'3px'}},'😔 Aucun covoiturage disponible'),
+          React.createElement('div',{style:{fontSize:'12.5px',color:'#8a6a10'}},'Pas de trajet '+from+' vers '+to+' en ce moment. Voici vos alternatives:')
+        ),
+        alts.map((alt,i)=>React.createElement(AltCard,{key:i,alt}))
+      ),
+      !alts&&display.length===0&&React.createElement('div',{style:{textAlign:'center',padding:'36px 12px',color:'var(--tx3)'}},
+        React.createElement('div',{style:{fontSize:'38px',marginBottom:'8px'}},'🔍'),
+        React.createElement('div',{style:{fontWeight:'700',fontSize:'14px',marginBottom:'4px'}},'Aucun trajet disponible'),
+        React.createElement('div',{style:{fontSize:'12px'}},'Essayez un autre quartier du Grand Tunis')
+      ),
+      display.map(r=>React.createElement(RideCard,{key:r._id,r,onClick:()=>onRide(r)}))
+    )
+  );
+}
+
+
+function DetailScreen({ride:r,onBack}){
+  const {user,bookRide,bookings,msgs,sendMsg}=useApp();
+  const [tab,setTab]=useState('info');
+  const [txt,setTxt]=useState('');
+  const chatRef=useRef(null);
+  const isOwn=r.driver._id===user._id;
+  const alreadyBooked=bookings.some(b=>b.ride?._id===r._id);
+  const [booked,setBooked]=useState(alreadyBooked);
+  const rMsgs=msgs[r._id]||[];
+  const doBook=()=>{if(bookRide(r._id))setBooked(true);};
+  const send=()=>{if(!txt.trim())return;sendMsg(r._id,txt);setTxt('');setTimeout(()=>chatRef.current?.scrollTo(0,9999),60);};
+  return React.createElement('div',{className:'screen',style:{paddingBottom:0}},
+    React.createElement('div',{style:{background:'linear-gradient(150deg,#072b18,#1a7a4a)',padding:'50px 16px 14px',color:'#fff'}},
+      React.createElement('button',{onClick:onBack,style:{background:'rgba(255,255,255,.18)',border:'none',color:'#fff',borderRadius:'8px',padding:'7px 13px',cursor:'pointer',fontWeight:'700',fontSize:'12.5px',marginBottom:'12px'}},'← Retour'),
+      React.createElement('div',{style:{fontSize:'21px',fontWeight:'800',marginBottom:'3px'}},r.from.zone,' ',React.createElement('span',{style:{opacity:.7,fontSize:'14px'}},'→'),' ',r.to.zone),
+      React.createElement('div',{style:{opacity:.75,fontSize:'12.5px',marginBottom:'10px'}},fmtD(r.dep)+' · '+fmtT(r.dep)),
+      React.createElement('div',{className:'dtabs'},
+        ['info','carte','chat'].map(t=>React.createElement('button',{key:t,className:'dtab '+(tab===t?'on':'off'),onClick:()=>setTab(t)},
+          t==='info'?'📋 Details':t==='carte'?'🗺️ Carte':'💬 Chat'+(rMsgs.length?' ('+rMsgs.length+')':'')
+        ))
+      )
+    ),
+    tab==='info'&&React.createElement('div',{className:'pp',style:{paddingTop:'14px'}},
+      React.createElement('div',{className:'card'},
+        React.createElement('div',{className:'row gap10'},
+          React.createElement(Av,{u:r.driver}),
+          React.createElement('div',{style:{flex:1}},
+            React.createElement('div',{style:{fontWeight:'800',fontSize:'15px'}},r.driver.name),
+            React.createElement('div',{className:'row gap6',style:{marginTop:'3px'}},React.createElement(Stars,{r:r.driver.avg}),React.createElement('span',{className:'muted'},'('+r.driver.avg+') · '+(r.driver.rides||0)+' trajets'))
+          ),
+          React.createElement(Tag,{cls:'tg',ch:'✅ Verifie'})
+        )
+      ),
+      React.createElement('div',{className:'card mt12'},
+        React.createElement('div',{style:{fontSize:'11px',fontWeight:'700',color:'var(--tx3)',marginBottom:'11px',textTransform:'uppercase',letterSpacing:'.5px'}},'Itineraire'),
+        React.createElement('div',{style:{display:'flex',gap:'12px'}},
+          React.createElement('div',{className:'rv'},
+            React.createElement('div',{className:'rvd',style:{background:'var(--g2)'}}),
+            React.createElement('div',{className:'rvl',style:{background:'linear-gradient(var(--g2),var(--red)'}}),
+            React.createElement('div',{className:'rvd',style:{background:'var(--red)'}})
+          ),
+          React.createElement('div',{style:{flex:1}},
+            React.createElement('div',{style:{marginBottom:'22px'}},React.createElement('div',{style:{fontWeight:'800',fontSize:'14px'}},r.from.zone),React.createElement('div',{className:'muted',style:{marginTop:'2px'}},r.from.addr)),
+            React.createElement('div',null,React.createElement('div',{style:{fontWeight:'800',fontSize:'14px'}},r.to.zone),React.createElement('div',{className:'muted',style:{marginTop:'2px'}},r.to.addr))
+          )
+        )
+      ),
+      React.createElement('div',{className:'card mt12'},
+        [
+          ['🕐','Depart',fmtD(r.dep)+' a '+fmtT(r.dep)],
+          ['💺','Places disponibles',r.avail+' sur '+r.seats],
+          ['📍','Distance','~'+r.km+' km'],
+          ['💰','Prix calcule automatiquement',r.price.toFixed(3)+' DT / pers'],
+          ['⛽','Carburant partage',carburantPart(r.km,r.seats)+' DT / pers'],
+          ['🌿','CO2 economise','-'+r.co2+' kg par passager'],
+          ...(r.note?[['💬','Note',r.note]]:[]),
+        ].map(([ico,lbl,val])=>React.createElement('div',{key:lbl,style:{display:'flex',gap:'11px',alignItems:'flex-start',padding:'9px 0',borderBottom:'1px solid var(--brd)'}},
+          React.createElement('span',{style:{fontSize:'17px',width:'22px',textAlign:'center',flexShrink:0}},ico),
+          React.createElement('div',null,
+            React.createElement('div',{style:{fontSize:'10px',fontWeight:'700',color:'var(--tx3)',textTransform:'uppercase',letterSpacing:'.5px'}},lbl),
+            React.createElement('div',{style:{fontSize:'13.5px',marginTop:'2px',fontWeight:'500'}},val)
+          )
+        ))
+      ),
+      React.createElement('div',{className:'cflat mt12'},
+        React.createElement('div',{style:{fontSize:'11px',fontWeight:'800',color:'var(--g1)',marginBottom:'11px',textTransform:'uppercase',letterSpacing:'.5px'}},'💳 Recapitulatif paiement'),
+        React.createElement('div',{className:'rowb',style:{marginBottom:'6px'}},React.createElement('span',{className:'muted2'},'Prix / siege'),React.createElement('span',{style:{fontWeight:'800',color:'var(--g2)',fontSize:'16px'}},r.price.toFixed(3)+' DT')),
+        React.createElement('div',{className:'rowb',style:{marginBottom:'6px'}},React.createElement('span',{className:'muted2'},'dont carburant partage'),React.createElement('span',{className:'muted2'},'~'+carburantPart(r.km,r.seats)+' DT')),
+        React.createElement('div',{className:'rowb'},React.createElement('span',{className:'muted2'},'Votre solde actuel'),React.createElement('span',{style:{fontWeight:'700'}},user.bal.toFixed(3)+' DT')),
+        React.createElement('div',{className:'div'}),
+        React.createElement('div',{className:'rowb'},React.createElement('span',{style:{fontWeight:'700',fontSize:'13px'}},'Solde apres paiement'),React.createElement('span',{style:{fontWeight:'800',fontSize:'19px',color:'var(--g2)'}},(Math.max(0,user.bal-r.price)).toFixed(3)+' DT'))
+      ),
+      React.createElement('div',{style:{marginTop:'12px',paddingBottom:'22px'}},
+        isOwn
+          ? React.createElement('div',{style:{background:'var(--gl)',borderRadius:'var(--rsm)',padding:'13px',textAlign:'center',fontWeight:'700',color:'var(--g1)',fontSize:'14px',border:'1.5px solid #a7dbb8'}},"👤 C'est votre trajet — vous ne pouvez pas le reserver")
+          : booked
+            ? React.createElement('div',{style:{background:'#d1fae5',borderRadius:'var(--rsm)',padding:'13px',textAlign:'center',fontWeight:'800',color:'var(--g1)',fontSize:'14px'}},'✅ Trajet reserve avec succes!')
+            : React.createElement('button',{className:'btn btn-p',onClick:doBook},'🚗 Reserver maintenant')
+      )
+    ),
+    tab==='carte'&&React.createElement('div',{className:'pp',style:{paddingTop:'14px'}},
+      React.createElement('div',{className:'mapblk',style:{height:'240px'}},
+        React.createElement('div',{className:'mpin'},'📍'),
+        React.createElement('div',{style:{fontWeight:'800',fontSize:'15px',color:'var(--g1)',zIndex:1}},r.from.zone+' → '+r.to.zone),
+        React.createElement('div',{style:{fontSize:'12px',color:'var(--tx2)',zIndex:1}},'~'+r.km+' km · Grand Tunis'),
+        React.createElement('div',{style:{fontSize:'11px',color:'var(--tx3)',zIndex:1,marginTop:'3px'}},'Integrer Google Maps API pour la vraie carte')
+      ),
+      React.createElement('div',{className:'card mt12'},
+        React.createElement('div',{style:{fontWeight:'700',fontSize:'12px',color:'var(--tx3)',marginBottom:'9px',textTransform:'uppercase',letterSpacing:'.4px'}},'Points de repere'),
+        [r.from.zone,r.to.zone].map((z,i)=>{
+          const lm=(LM[z]||['Zone '+z]).slice(0,3);
+          return React.createElement('div',{key:z,style:{marginBottom:i===0?'10px':0}},
+            React.createElement('div',{style:{fontWeight:'700',fontSize:'12.5px',color:i===0?'var(--g2)':'var(--red)',marginBottom:'3px'}},(i===0?'🟢 ':'🔴 ')+z),
+            lm.map(l=>React.createElement('div',{key:l,style:{fontSize:'12px',color:'var(--tx2)',paddingLeft:'14px',marginBottom:'2px'}},'• '+l))
+          );
+        })
+      ),
+      React.createElement('div',{className:'cflat mt12',style:{textAlign:'center'}},
+        React.createElement('div',{style:{fontSize:'26px',marginBottom:'5px'}},'🌿'),
+        React.createElement('div',{style:{fontWeight:'800',color:'var(--g1)',fontSize:'14px'}},'Vous economisez '+r.co2+' kg CO2'),
+        React.createElement('div',{style:{fontSize:'12px',color:'var(--tx2)',marginTop:'3px'}},'= '+Math.ceil(r.co2/21)+' arbre(s) · '+r.km+' km partages')
+      )
+    ),
+    tab==='chat'&&React.createElement('div',{style:{display:'flex',flexDirection:'column',height:'calc(100vh - 186px)'}},
+      React.createElement('div',{ref:chatRef,className:'clist'},
+        rMsgs.length===0&&React.createElement('div',{style:{textAlign:'center',padding:'28px',color:'var(--tx3)'}},React.createElement('div',{style:{fontSize:'34px',marginBottom:'7px'}},'💬'),React.createElement('div',{style:{fontSize:'12.5px'}},'Dites bonjour au conducteur!')),
+        rMsgs.map(m=>{
+          const mine=m.sender._id===user?._id;
+          return React.createElement('div',{key:m._id,style:{display:'flex',flexDirection:mine?'row-reverse':'row',gap:'7px',alignItems:'flex-end'}},
+            React.createElement(Av,{u:m.sender,cls:'av-sm'}),
+            React.createElement('div',null,
+              React.createElement('div',{className:'cmsg '+(mine?'me':'them')},m.text),
+              React.createElement('div',{style:{fontSize:'9.5px',color:'var(--tx3)',textAlign:mine?'right':'left',marginTop:'3px'}},ago(m.at))
+            )
+          );
+        })
+      ),
+      React.createElement('div',{className:'cbar'},
+        React.createElement('input',{className:'cinp',placeholder:'Ecrire un message...',value:txt,onChange:e=>setTxt(e.target.value),onKeyDown:e=>e.key==='Enter'&&send()}),
+        React.createElement('button',{className:'csend',onClick:send},'➤')
+      )
+    )
+  );
+}
+
+
+function CreateScreen({onDone}){
+  const {user,createRide}=useApp();
+  const [f,setF]=useState({fromZone:'',fromAddr:'',toZone:'',toAddr:'',date:'',time:'',seats:2,note:''});
+  const [step,setStep]=useState(1);
+  const [loading,setLoading]=useState(false);
+  const set=(k,v)=>setF(p=>({...p,[k]:v}));
+  const km=f.fromZone&&f.toZone?getKm(f.fromZone,f.toZone):0;
+  const autoPrice=km?calcPrice(km):0;
+  const co2Prev=(0.21*km*0.6).toFixed(1);
+  const carb=km?carburantPart(km,f.seats):'—';
+  const can2=f.fromZone&&f.toZone&&f.fromZone!==f.toZone;
+  const can3=f.date&&f.time;
+  const submit=async()=>{
+    setLoading(true);
+    await new Promise(r=>setTimeout(r,550));
+    const ride=createRide({fromZone:f.fromZone,fromAddr:f.fromAddr,toZone:f.toZone,toAddr:f.toAddr,dep:new Date(f.date+'T'+f.time).toISOString(),seats:parseInt(f.seats),note:f.note});
+    setLoading(false);
+    onDone(ride);
+  };
+  const Dot=({n})=>React.createElement('div',{style:{display:'flex',alignItems:'center',gap:'4px'}},
+    React.createElement('div',{style:{width:'22px',height:'22px',borderRadius:'50%',background:step>=n?'var(--g2)':'var(--brd)',color:step>=n?'#fff':'var(--tx3)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'11px',fontWeight:'800'}},n),
+    n<3&&React.createElement('div',{style:{height:'2px',width:'24px',background:step>n?'var(--g2)':'var(--brd)'}})
+  );
+  return React.createElement('div',{className:'screen'},
+    React.createElement('div',{className:'hdr'},React.createElement('h2',{style:{fontSize:'19px',fontWeight:'800'}},'Publier un trajet'),React.createElement('span',{style:{fontSize:'20px'}},'🚗')),
+    React.createElement('div',{className:'pp',style:{marginBottom:'14px'}},
+      React.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',gap:'0',marginBottom:'4px'}},[1,2,3].map(n=>React.createElement(Dot,{key:n,n}))),
+      React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontSize:'10px',color:'var(--tx3)',fontWeight:'700',textTransform:'uppercase',letterSpacing:'.4px'}},
+        React.createElement('span',null,'Itineraire'),React.createElement('span',null,'Horaire'),React.createElement('span',null,'Resume')
+      )
+    ),
+    React.createElement('div',{className:'pp'},
+      step===1&&React.createElement('div',{className:'card'},
+        React.createElement('div',{style:{fontSize:'11px',fontWeight:'800',color:'var(--g2)',marginBottom:'12px',textTransform:'uppercase',letterSpacing:'.5px'}},'📍 Depart'),
+        React.createElement('div',{className:'field'},React.createElement('label',null,'Quartier de depart'),
+          React.createElement('select',{value:f.fromZone,onChange:e=>{set('fromZone',e.target.value);set('fromAddr','');}},
+            React.createElement('option',{value:''},'— Choisir —'),
+            Object.entries(ZONES).map(([sec,zs])=>React.createElement('optgroup',{key:sec,label:'📌 '+sec},zs.map(z=>React.createElement('option',{key:z,value:z},z))))
+          )
+        ),
+        f.fromZone&&LM[f.fromZone]&&React.createElement('div',{className:'field'},React.createElement('label',null,'Point de rendez-vous'),
+          React.createElement('select',{value:f.fromAddr,onChange:e=>set('fromAddr',e.target.value)},
+            React.createElement('option',{value:''},'— Choisir un repere —'),
+            LM[f.fromZone].map(l=>React.createElement('option',{key:l,value:l},l))
+          )
+        ),
+        f.fromZone&&!LM[f.fromZone]&&React.createElement('div',{className:'field'},React.createElement('label',null,'Adresse precise'),React.createElement('input',{type:'text',placeholder:'face a la pharmacie...',value:f.fromAddr,onChange:e=>set('fromAddr',e.target.value)})),
+        React.createElement('div',{style:{fontSize:'11px',fontWeight:'800',color:'var(--red)',margin:'12px 0',textTransform:'uppercase',letterSpacing:'.5px'}},'🏁 Destination'),
+        React.createElement('div',{className:'field'},React.createElement('label',null,'Quartier de destination'),
+          React.createElement('select',{value:f.toZone,onChange:e=>{set('toZone',e.target.value);set('toAddr','');}},
+            React.createElement('option',{value:''},'— Choisir —'),
+            Object.entries(ZONES).map(([sec,zs])=>React.createElement('optgroup',{key:sec,label:'📌 '+sec},zs.filter(z=>z!==f.fromZone).map(z=>React.createElement('option',{key:z,value:z},z))))
+          )
+        ),
+        f.toZone&&LM[f.toZone]&&React.createElement('div',{className:'field'},React.createElement('label',null,'Point de depose'),
+          React.createElement('select',{value:f.toAddr,onChange:e=>set('toAddr',e.target.value)},
+            React.createElement('option',{value:''},'— Choisir un repere —'),
+            LM[f.toZone].map(l=>React.createElement('option',{key:l,value:l},l))
+          )
+        ),
+        km>0&&React.createElement('div',{style:{background:'var(--gp)',borderRadius:'var(--rsm)',padding:'10px 12px',marginTop:'4px',border:'1px solid #c8e6d4'}},
+          React.createElement('div',{style:{fontSize:'12px',fontWeight:'800',color:'var(--g1)',marginBottom:'6px'}},'Prix calcule automatiquement'),
+          [['📏 Distance','~'+km+' km'],['💰 Prix/pers','~'+autoPrice.toFixed(3)+' DT'],['⛽ Carburant/pers','~'+carb+' DT'],['🌿 CO2 economise','-'+co2Prev+' kg']].map(([l,v])=>
+            React.createElement('div',{key:l,className:'rowb',style:{marginBottom:'3px'}},
+              React.createElement('span',{style:{fontSize:'12px',color:'var(--tx2)'}},[l]),
+              React.createElement('span',{style:{fontWeight:'700',color:'var(--g2)',fontSize:'12px'}},v)
+            )
+          ),
+          React.createElement('div',{style:{fontSize:'10.5px',color:'var(--tx3)',marginTop:'5px'}},'Formule: 0.9 DT carburant fixe + 0.13 DT/km')
+        ),
+        React.createElement('button',{className:'btn'+(can2?' btn-p':' btn-o'),style:{marginTop:'14px'},onClick:()=>can2&&setStep(2),disabled:!can2},'Suivant →')
+      ),
+      step===2&&React.createElement('div',{className:'card'},
+        React.createElement('div',{style:{fontSize:'11px',fontWeight:'800',color:'var(--g2)',marginBottom:'12px',textTransform:'uppercase',letterSpacing:'.5px'}},'🕐 Horaire'),
+        React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
+          React.createElement('div',{className:'field',style:{marginBottom:0}},React.createElement('label',null,'Date'),React.createElement('input',{type:'date',value:f.date,onChange:e=>set('date',e.target.value)})),
+          React.createElement('div',{className:'field',style:{marginBottom:0}},React.createElement('label',null,'Heure'),React.createElement('input',{type:'time',value:f.time,onChange:e=>set('time',e.target.value)}))
+        ),
+        React.createElement('div',{className:'field',style:{marginTop:'12px'}},React.createElement('label',null,'Nombre de places'),
+          React.createElement('select',{value:f.seats,onChange:e=>set('seats',e.target.value)},[1,2,3,4].map(n=>React.createElement('option',{key:n,value:n},n+(n===1?' place':' places'))))
+        ),
+        React.createElement('div',{className:'field'},React.createElement('label',null,'Note pour les passagers (optionnel)'),React.createElement('textarea',{placeholder:'Ex: AC disponible, Non-fumeur, Musique douce...',value:f.note,onChange:e=>set('note',e.target.value)})),
+        React.createElement('div',{style:{display:'flex',gap:'10px'}},
+          React.createElement('button',{className:'btn btn-o',style:{flex:'0 0 76px'},onClick:()=>setStep(1)},'← Retour'),
+          React.createElement('button',{className:'btn'+(can3?' btn-p':' btn-o'),onClick:()=>can3&&setStep(3),disabled:!can3},'Voir le resume →')
+        )
+      ),
+      step===3&&React.createElement('div',null,
+        React.createElement('div',{className:'card'},
+          React.createElement('div',{style:{fontSize:'11px',fontWeight:'800',color:'var(--g2)',marginBottom:'12px',textTransform:'uppercase',letterSpacing:'.5px'}},'📋 Resume de votre trajet'),
+          [
+            ['🟢 Depart',f.fromZone+(f.fromAddr?' · '+f.fromAddr:'')],
+            ['🔴 Arrivee',f.toZone+(f.toAddr?' · '+f.toAddr:'')],
+            ['🕐 Horaire',f.date&&f.time?fmtD(new Date(f.date+'T'+f.time).toISOString())+' · '+f.time:'—'],
+            ['💺 Places',f.seats+' place'+(f.seats>1?'s':'')],
+            ['💰 Prix calcule',autoPrice.toFixed(3)+' DT/pers (automatique)'],
+            ['⛽ Carburant/pers',carb+' DT (inclus dans prix)'],
+            ['🌿 CO2 economise','-'+co2Prev+' kg/passager'],
+          ].map(([l,v])=>React.createElement('div',{key:l,className:'rowb',style:{padding:'7px 0',borderBottom:'1px solid var(--brd)'}},
+            React.createElement('span',{style:{fontSize:'12px',color:'var(--tx2)',fontWeight:'600'}},l),
+            React.createElement('span',{style:{fontSize:'12.5px',fontWeight:'700',color:'var(--tx)',textAlign:'right',maxWidth:'55%'}},v||'—')
+          ))
+        ),
+        React.createElement('div',{className:'cflat mt12',style:{textAlign:'center'}},
+          React.createElement('div',{style:{fontSize:'22px',marginBottom:'4px'}},'🌿'),
+          React.createElement('div',{style:{fontWeight:'800',fontSize:'13.5px',color:'var(--g1)'}},'Vous contribuez a reduire la pollution du Grand Tunis!'),
+          React.createElement('div',{style:{fontSize:'12px',color:'var(--tx2)',marginTop:'3px'}},co2Prev+' kg CO2 economies = '+Math.ceil(co2Prev/21)+' arbre(s)')
+        ),
+        React.createElement('div',{style:{display:'flex',gap:'10px',marginTop:'12px'}},
+          React.createElement('button',{className:'btn btn-o',style:{flex:'0 0 76px'},onClick:()=>setStep(2)},'← Modifier'),
+          React.createElement('button',{className:'btn btn-p',onClick:submit,disabled:loading||!can2||!can3},loading?'Publication...':'🚀 Publier ce trajet')
+        )
+      )
+    )
+  );
+}
+
+
+function ProfileScreen(){
+  const {user,bookings,myRides,logout}=useApp();
+  const u=user;
+  const pct=Math.min(100,(u.pts/600)*100);
+  const trees=Math.ceil((u.co2||0)/21);
+  return React.createElement('div',{className:'screen'},
+    React.createElement('div',{className:'ptop'},
+      React.createElement('div',{style:{width:'76px',height:'76px',borderRadius:'50%',background:'rgba(255,255,255,.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'26px',fontWeight:'800',margin:'0 auto 10px',border:'3px solid rgba(255,255,255,.35)',color:'#fff'}},ini(u.name)),
+      React.createElement('div',{style:{fontSize:'19px',fontWeight:'800'}},u.name),
+      React.createElement('div',{style:{opacity:.8,fontSize:'13px',marginTop:'3px'}},u.role==='driver'?'🚗 Conducteur':u.role==='passenger'?'🧳 Passager':'🔄 Conducteur & Passager'),
+      React.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',gap:'5px',marginTop:'5px'}},
+        React.createElement(Stars,{r:u.avg}),React.createElement('span',{style:{opacity:.8,fontSize:'12.5px'}},' '+u.avg)
+      ),
+      u.zone&&React.createElement('div',{style:{opacity:.65,fontSize:'12px',marginTop:'4px'}},'📍 '+u.zone)
+    ),
+    React.createElement('div',{className:'pstats'},
+      React.createElement('div',{className:'ps'},React.createElement('div',{className:'psn'},u.rides),React.createElement('div',{className:'psl'},'Trajets')),
+      React.createElement('div',{className:'ps'},React.createElement('div',{className:'psn',style:{color:'var(--g2)'}},u.pts),React.createElement('div',{className:'psl'},'Points')),
+      React.createElement('div',{className:'ps'},React.createElement('div',{className:'psn',style:{color:'var(--blue)'}},+(u.co2||0).toFixed(1)+'kg'),React.createElement('div',{className:'psl'},'CO2 sauve'))
+    ),
+    React.createElement('div',{className:'pp',style:{marginTop:'16px'}},
+      React.createElement('div',{className:'card'},
+        React.createElement('div',{className:'rowb',style:{marginBottom:'5px'}},
+          React.createElement('span',{style:{fontWeight:'700',fontSize:'13.5px'}},'⭐ Points EcoMove'),
+          React.createElement('span',{className:'muted'},u.pts+' / 600')
+        ),
+        React.createElement('div',{className:'prog'},React.createElement('div',{className:'pf',style:{width:pct+'%'}})),
+        React.createElement('div',{className:'muted',style:{fontSize:'11.5px',marginTop:'4px'}},(600-u.pts)+' pts pour le prochain niveau 🏆')
+      ),
+      React.createElement('div',{style:{background:'linear-gradient(145deg,#0b4d2e,#1a7a4a)',borderRadius:'var(--r)',padding:'14px',marginTop:'12px'}},
+        React.createElement('div',{style:{fontSize:'10px',color:'rgba(255,255,255,.7)',fontWeight:'700',letterSpacing:'.5px',textTransform:'uppercase',marginBottom:'4px'}},'💳 Portefeuille simule'),
+        React.createElement('div',{style:{fontSize:'28px',fontWeight:'800',color:'#fff'}},u.bal.toFixed(3)+' DT'),
+        React.createElement('div',{style:{fontSize:'11px',color:'rgba(255,255,255,.6)',marginTop:'3px'}},'Solde disponible pour vos reservations')
+      ),
+      u.badges?.length>0&&React.createElement('div',{className:'card mt12'},
+        React.createElement('div',{style:{fontWeight:'800',fontSize:'14px',marginBottom:'11px'}},'🏅 Mes badges'),
+        React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'8px'}},
+          u.badges.map((b,i)=>React.createElement('div',{key:i,className:'bdg'},React.createElement('div',{className:'bdgi'},b.i),React.createElement('div',{className:'bdgn'},b.n)))
+        )
+      ),
+      myRides.length>0&&React.createElement('div',{className:'card mt12'},
+        React.createElement('div',{style:{fontWeight:'800',fontSize:'14px',marginBottom:'11px'}},'🚗 Mes trajets publies'),
+        myRides.slice(0,4).map(r=>React.createElement('div',{key:r._id,className:'rowb',style:{padding:'9px 0',borderBottom:'1px solid var(--brd)'}},
+          React.createElement('div',null,
+            React.createElement('div',{style:{fontWeight:'700',fontSize:'13.5px'}},r.from.zone+' → '+r.to.zone),
+            React.createElement('div',{className:'muted'},fmtD(r.dep)+' · '+fmtT(r.dep))
+          ),
+          React.createElement('div',{style:{textAlign:'right'}},
+            React.createElement(Tag,{cls:'tg',ch:r.price.toFixed(1)+' DT'}),
+            React.createElement('div',{className:'muted',style:{marginTop:'3px'}},'💺 '+r.avail+'/'+r.seats)
+          )
+        ))
+      ),
+      bookings.length>0&&React.createElement('div',{className:'card mt12'},
+        React.createElement('div',{style:{fontWeight:'800',fontSize:'14px',marginBottom:'11px'}},'🎫 Mes reservations'),
+        bookings.slice(0,4).map(b=>React.createElement('div',{key:b._id,className:'rowb',style:{padding:'9px 0',borderBottom:'1px solid var(--brd)'}},
+          React.createElement('div',null,
+            React.createElement('div',{style:{fontWeight:'700',fontSize:'13.5px'}},b.ride?.from?.zone+' → '+b.ride?.to?.zone),
+            React.createElement('div',{className:'muted'},fmtD(b.ride?.dep)+' · '+fmtT(b.ride?.dep))
+          ),
+          React.createElement(Tag,{cls:'tg',ch:b.cost.toFixed(3)+' DT'})
+        ))
+      ),
+      React.createElement('div',{className:'cflat mt12',style:{border:'1px solid #a7dbb8'}},
+        React.createElement('div',{style:{fontWeight:'800',fontSize:'13.5px',color:'var(--g1)',marginBottom:'10px'}},'🌍 Votre impact dans le Grand Tunis'),
+        React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'8px'}},
+          [{i:'🌿',v:(u.co2||0).toFixed(1)+' kg',l:'CO2 economise'},{i:'🌳',v:trees+' arbre'+(trees!==1?'s':''),l:'Equiv. plantation'},{i:'⛽',v:((u.co2||0)/2.31).toFixed(1)+' L',l:'Carburant economise'},{i:'🚗',v:(u.rides||0)+' trajet'+(u.rides!==1?'s':''),l:'Covoiturages'}].map(({i,v,l})=>
+            React.createElement('div',{key:l,style:{background:'#fff',borderRadius:'10px',padding:'10px',textAlign:'center',border:'1px solid #c8e6d4'}},
+              React.createElement('div',{style:{fontSize:'20px'}},i),
+              React.createElement('div',{style:{fontWeight:'800',fontSize:'14px',color:'var(--g2)'}},v),
+              React.createElement('div',{style:{fontSize:'10px',color:'var(--tx3)',marginTop:'2px'}},l)
+            )
+          )
+        )
+      ),
+      React.createElement('button',{className:'btn btn-o',style:{marginTop:'16px',marginBottom:'8px'},onClick:logout},'🚪 Se deconnecter')
+    )
+  );
+}
+
+function LeaderboardScreen(){
+  const {user}=useApp();
+  const sorted=[...USERS].filter(u=>!u.isAdmin).sort((a,b)=>b.pts-a.pts);
+  const myRank=sorted.findIndex(u=>u._id===user?._id)+1;
+  const rc=i=>i===0?'lr1':i===1?'lr2':i===2?'lr3':'';
+  const rl=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);
+  return React.createElement('div',{className:'screen'},
+    React.createElement('div',{style:{background:'linear-gradient(150deg,#072b18,#1a7a4a)',padding:'50px 16px 20px',color:'#fff'}},
+      React.createElement('div',{style:{fontSize:'21px',fontWeight:'800',marginBottom:'3px'}},'🏆 Classement Grand Tunis'),
+      React.createElement('div',{style:{opacity:.75,fontSize:'12.5px'}},'Top eco-conducteurs de notre ville'),
+      myRank>0&&React.createElement('div',{style:{background:'rgba(255,255,255,.18)',borderRadius:'10px',padding:'10px 14px',marginTop:'12px',display:'flex',justifyContent:'space-between',alignItems:'center',border:'1px solid rgba(255,255,255,.2)'}},
+        React.createElement('span',{style:{fontSize:'13px',fontWeight:'700'}},'Votre position'),
+        React.createElement('span',{style:{fontSize:'21px',fontWeight:'800'}},'#'+myRank)
+      )
+    ),
+    React.createElement('div',{className:'pp',style:{marginTop:'12px'}},
+      sorted.map((u,i)=>{
+        const mine=u._id===user?._id;
+        return React.createElement('div',{key:u._id,className:'card',style:{display:'flex',alignItems:'center',gap:'9px',background:mine?'var(--gp)':'#fff',border:mine?'1.5px solid var(--g3)':'1px solid var(--brd)',marginTop:'10px'}},
+          React.createElement('div',{className:'lbr '+rc(i)},rl(i)),
+          React.createElement(Av,{u}),
+          React.createElement('div',{style:{flex:1}},
+            React.createElement('div',{className:'rowb'},
+              React.createElement('span',{style:{fontWeight:'700',fontSize:'13.5px'}},u.name+(mine?' (Vous)':'')),
+              React.createElement('span',{style:{fontWeight:'800',color:'var(--g2)',fontSize:'15px'}},u.pts+' pts')
+            ),
+            React.createElement('div',{style:{display:'flex',gap:'5px',marginTop:'4px',flexWrap:'wrap'}},
+              React.createElement('span',{className:'muted'},'📍 '+u.zone),
+              React.createElement('span',{className:'muted'},'· '+u.rides+' trajets'),
+              React.createElement('span',{className:'muted'},'· 🌿 '+u.co2+'kg'),
+              u.badges.slice(0,2).map(b=>React.createElement('span',{key:b.n,style:{fontSize:'13px'}},b.i))
+            ),
+            React.createElement('div',{className:'prog',style:{marginTop:'5px'}},
+              React.createElement('div',{className:'pf',style:{width:Math.min(100,(u.pts/600)*100)+'%'}})
+            )
+          )
+        );
+      })
+    )
+  );
+}
+
+
+function AdminScreen(){
+  const {rides}=useApp();
+  const [tab,setTab]=useState('stats');
+  const [pass,setPass]=useState('');
+  const [auth,setAuth]=useState(false);
+  const [err,setErr]=useState('');
+
+  if(!auth) return React.createElement('div',{className:'screen'},
+    React.createElement('div',{className:'hdr'},
+      React.createElement('h2',{style:{fontSize:'19px',fontWeight:'800'}},'Espace Admin'),
+      React.createElement('span',{style:{fontSize:'20px'}},'⚙️')
+    ),
+    React.createElement('div',{className:'pp'},
+      React.createElement('div',{style:{textAlign:'center',padding:'28px 0 20px'}},
+        React.createElement('div',{style:{fontSize:'52px',marginBottom:'12px'}},'🔐'),
+        React.createElement('div',{style:{fontWeight:'800',fontSize:'17px',marginBottom:'4px'}},'Acces Administrateur'),
+        React.createElement('div',{style:{fontSize:'13px',color:'var(--tx3)',marginBottom:'6px'}},'Reserve a l\'equipe EcoMove uniquement'),
+        React.createElement('div',{style:{background:'var(--gl)',borderRadius:'8px',padding:'8px 14px',display:'inline-block',fontSize:'12px',color:'var(--g1)',fontWeight:'600'}},
+          '🔒 Cet espace est protege par mot de passe'
+        )
+      ),
+      React.createElement('div',{className:'field'},
+        React.createElement('label',null,'Mot de passe administrateur'),
+        React.createElement('input',{type:'password',placeholder:'Entrez le mot de passe admin...',value:pass,
+          onChange:e=>setPass(e.target.value),
+          onKeyDown:e=>{
+            if(e.key==='Enter'){
+              if(pass==='admin2024'){setAuth(true);setErr('');}
+              else setErr('Mot de passe incorrect');
+            }
+          }
+        })
+      ),
+      err&&React.createElement('div',{style:{background:'#fff0f1',color:'#dc3545',padding:'10px',borderRadius:'8px',fontSize:'13px',marginBottom:'12px',fontWeight:'700',border:'1px solid #ffc9cc'}},'⚠️ '+err),
+      React.createElement('button',{className:'btn btn-p',onClick:()=>{
+        if(pass==='admin2024'){setAuth(true);setErr('');}
+        else setErr('Mot de passe incorrect');
+      }},'🔓 Acceder au dashboard'),
+      React.createElement('p',{style:{textAlign:'center',marginTop:'12px',fontSize:'12px',color:'var(--tx3)'}},'Demo: mot de passe = admin2024')
+    )
+  );
+
+  const totalCO2=USERS.filter(u=>!u.isAdmin).reduce((s,u)=>s+u.co2,0);
+  const zoneCount={};
+  rides.forEach(r=>{zoneCount[r.from.zone]=(zoneCount[r.from.zone]||0)+1;});
+  const topZ=Object.entries(zoneCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const maxZ=topZ[0]?.[1]||1;
+
+  return React.createElement('div',{className:'screen'},
+    React.createElement('div',{style:{background:'linear-gradient(150deg,#072b18,#1a7a4a)',padding:'50px 16px 16px',color:'#fff'}},
+      React.createElement('div',{className:'rowb',style:{marginBottom:'12px'}},
+        React.createElement('div',{style:{fontSize:'19px',fontWeight:'800'}},'⚙️ Dashboard Admin'),
+        React.createElement('button',{onClick:()=>{setAuth(false);setPass('');},style:{background:'rgba(255,255,255,.2)',border:'none',color:'#fff',borderRadius:'8px',padding:'6px 12px',cursor:'pointer',fontSize:'12px',fontWeight:'700'}},'🔒 Verrouiller')
+      ),
+      React.createElement('div',{style:{display:'flex',gap:'5px'}},
+        ['stats','utilisateurs','trajets'].map(t=>React.createElement('button',{key:t,onClick:()=>setTab(t),
+          style:{padding:'7px 13px',borderRadius:'8px',border:'none',cursor:'pointer',fontWeight:'700',fontSize:'11.5px',
+          background:tab===t?'#fff':'rgba(255,255,255,.18)',color:tab===t?'var(--g2)':'rgba(255,255,255,.9)'}
+        },t==='stats'?'📊 Apercu':t==='utilisateurs'?'👥 Utilisateurs':'🚗 Trajets'))
+      )
+    ),
+    React.createElement('div',{className:'pp',style:{marginTop:'12px'}},
+      tab==='stats'&&React.createElement('div',null,
+        React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px',marginBottom:'12px'}},
+          [{ico:'👥',n:USERS.filter(u=>!u.isAdmin).length,l:'Utilisateurs'},{ico:'🚗',n:rides.length,l:'Trajets publies'},{ico:'🎫',n:rides.reduce((s,r)=>s+(r.seats-r.avail),0),l:'Places reservees'},{ico:'🌍',n:totalCO2.toFixed(1)+' kg',l:'CO2 economise total'}].map(({ico,n,l})=>
+            React.createElement('div',{key:l,className:'astat'},
+              React.createElement('div',{style:{fontSize:'22px',marginBottom:'4px'}},ico),
+              React.createElement('div',{className:'asn'},n),
+              React.createElement('div',{className:'asl'},l)
+            )
+          )
+        ),
+        React.createElement('div',{className:'card'},
+          React.createElement('div',{style:{fontWeight:'800',fontSize:'13.5px',marginBottom:'12px'}},'📊 Zones de depart les plus actives'),
+          topZ.map(([zone,count])=>React.createElement('div',{key:zone,className:'brow'},
+            React.createElement('div',{className:'rowb'},
+              React.createElement('span',{style:{fontSize:'12.5px',fontWeight:'600',color:'var(--tx2)'}},zone),
+              React.createElement('span',{className:'muted'},count+' trajet'+(count!==1?'s':''))
+            ),
+            React.createElement('div',{className:'btrack'},React.createElement('div',{className:'bfill',style:{width:((count/maxZ)*100)+'%'}}))
+          ))
+        ),
+        React.createElement('div',{className:'cflat mt12',style:{border:'1px solid #a7dbb8'}},
+          React.createElement('div',{style:{fontWeight:'800',fontSize:'13.5px',color:'var(--g1)',marginBottom:'9px'}},'🌿 Impact total EcoMove — Grand Tunis'),
+          React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'8px'}},
+            [{i:'🌿',v:totalCO2.toFixed(1)+' kg',l:'CO2 economise'},{i:'🌳',v:Math.ceil(totalCO2/21)+' arbres',l:'Plantation equiv.'},{i:'🚗',v:USERS.filter(u=>!u.isAdmin).reduce((s,u)=>s+u.rides,0),l:'Trajets partages'},{i:'⛽',v:(totalCO2/2.31).toFixed(0)+' L',l:'Litres economies'}].map(({i,v,l})=>
+              React.createElement('div',{key:l,style:{background:'#fff',borderRadius:'8px',padding:'10px',textAlign:'center',border:'1px solid #c8e6d4'}},
+                React.createElement('div',{style:{fontSize:'18px'}},i),
+                React.createElement('div',{style:{fontWeight:'800',fontSize:'14px',color:'var(--g2)'}},v),
+                React.createElement('div',{style:{fontSize:'10px',color:'var(--tx3)'}},l)
+              )
+            )
+          )
+        )
+      ),
+      tab==='utilisateurs'&&React.createElement('div',null,
+        USERS.filter(u=>!u.isAdmin).map(u=>React.createElement('div',{key:u._id,className:'card',style:{display:'flex',alignItems:'center',gap:'9px',marginTop:'10px'}},
+          React.createElement(Av,{u}),
+          React.createElement('div',{style:{flex:1}},
+            React.createElement('div',{className:'rowb'},
+              React.createElement('span',{style:{fontWeight:'700',fontSize:'13.5px'}},u.name),
+              React.createElement(Tag,{cls:u.role==='driver'?'tg':u.role==='passenger'?'tb':'tgo',ch:u.role==='driver'?'🚗 Conducteur':u.role==='passenger'?'🧳 Passager':'🔄 Les deux'})
+            ),
+            React.createElement('div',{style:{fontSize:'11.5px',color:'var(--tx3)',marginTop:'2px',marginBottom:'3px'}},u.email+' · 📍 '+u.zone),
+            React.createElement('div',{style:{display:'flex',gap:'5px',flexWrap:'wrap'}},
+              React.createElement('span',{className:'muted'},'⭐ '+u.avg),
+              React.createElement('span',{className:'muted'},'· '+u.pts+' pts'),
+              React.createElement('span',{className:'muted'},'· '+u.rides+' trajets'),
+              React.createElement('span',{className:'muted'},'· 🌿 '+u.co2+'kg')
+            )
+          )
+        ))
+      ),
+      tab==='trajets'&&React.createElement('div',null,
+        rides.slice(0,12).map(r=>React.createElement('div',{key:r._id,className:'card',style:{marginTop:'10px'}},
+          React.createElement('div',{className:'rowb',style:{marginBottom:'4px'}},
+            React.createElement('span',{style:{fontWeight:'800',fontSize:'13.5px'}},r.from.zone+' → '+r.to.zone),
+            React.createElement(Tag,{cls:'tg',ch:r.price.toFixed(1)+' DT'})
+          ),
+          React.createElement('div',{className:'muted2',style:{marginBottom:'4px'}},r.driver.name+' · '+fmtD(r.dep)+' '+fmtT(r.dep)),
+          React.createElement('div',{style:{display:'flex',gap:'5px',flexWrap:'wrap'}},
+            React.createElement(Tag,{cls:'tb',ch:'⏳ A venir'}),
+            React.createElement('span',{className:'muted'},'💺 '+r.avail+'/'+r.seats),
+            React.createElement('span',{className:'muted'},'📍 '+r.km+'km'),
+            React.createElement('span',{className:'muted'},'🌿 -'+r.co2+'kg')
+          )
+        ))
+      )
+    )
+  );
+}
+
+function App(){
+  const {user,toast}=useApp();
+  const [screen,setScreen]=useState('home');
+  const [selRide,setSelRide]=useState(null);
+  if(!user) return React.createElement(AuthScreen);
+  const nav=[
+    {id:'home',i:'🏠',l:'Accueil'},
+    {id:'create',i:'➕',l:'Creer'},
+    {id:'lb',i:'🏆',l:'Top'},
+    {id:'profil',i:'👤',l:'Profil'},
+    {id:'admin',i:'⚙️',l:'Admin'},
+  ];
+  const render=()=>{
+    if(selRide) return React.createElement(DetailScreen,{ride:selRide,onBack:()=>setSelRide(null)});
+    switch(screen){
+      case 'home':   return React.createElement(HomeScreen,{onRide:r=>setSelRide(r)});
+      case 'create': return React.createElement(CreateScreen,{onDone:r=>{setSelRide(r);setScreen('home');}});
+      case 'lb':     return React.createElement(LeaderboardScreen);
+      case 'profil': return React.createElement(ProfileScreen);
+      case 'admin':  return React.createElement(AdminScreen);
+      default:       return React.createElement(HomeScreen,{onRide:r=>setSelRide(r)});
+    }
+  };
+  return React.createElement('div',{className:'app'},
+    toast&&React.createElement('div',{className:'toast'},toast),
+    render(),
+    !selRide&&React.createElement('nav',{className:'bnav'},
+      nav.map(n=>React.createElement('button',{key:n.id,className:'nb'+(screen===n.id?' on':''),onClick:()=>setScreen(n.id)},
+        React.createElement('span',{className:'ni'},n.i),
+        React.createElement('span',{className:'nl'},n.l)
+      ))
+    )
+  );
+}
+function Root(){return React.createElement(Provider,null,React.createElement(App));}
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(Root));
+</script>
+</body>
+</html>
